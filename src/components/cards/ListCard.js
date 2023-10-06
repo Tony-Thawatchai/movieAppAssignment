@@ -6,25 +6,28 @@ import { Button } from "@rneui/base";
 
 const ListCard = ({ data, navigation, type }) => {
   const [movies, setMovies] = useState(data);
+  
   const [typeOf, setTypeOf] = useState(type);
   console.log("typeOf", typeOf);
   const handleToSinglePage = (
     id,
+    media_type,
     title,
     overview,
     poster_path,
     release_date,
-    media_type,
-    popularity
+    popularity,
+    typeOf
   ) => {
     navigation.navigate("Single Movie", {
-      title,
       id,
       media_type,
+      title,
       overview,
       poster_path,
       release_date,
       popularity,
+      typeOf,
     });
   };
   // console.log("data", data);
@@ -57,11 +60,11 @@ const ListCard = ({ data, navigation, type }) => {
                 
                 handleToSinglePage(
                   item.id,
-                  // item.media_type,
+                  item.media_type,
                   item.title || item.name,
                   item.overview,
                   item.poster_path,
-                  item.release_date,
+                  item.release_date || item.first_air_date,
                   item.popularity
                 )
               }

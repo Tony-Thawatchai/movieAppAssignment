@@ -22,6 +22,8 @@ const SinglePage = ({ navigation, id, title, movies, route }) => {
     
   // }, []);
 
+  console.log("paramMediaType", paramMediaType);
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.wrap}>
@@ -37,8 +39,8 @@ const SinglePage = ({ navigation, id, title, movies, route }) => {
         <View style={styles.textWrap}>
           <Text style={styles.paragraph}>{route.params.overview}</Text>
           <Text style={styles.meta}>
-            Popularity: {route.params.popularity} | Release Date :{" "}
-            {route.params.release_date}
+            Popularity: {route.params.popularity} | Release Date :
+            {route.params.release_date || route.params.first_air_date}
           </Text>
         </View>
       </View>
