@@ -35,13 +35,14 @@ export const getTVShow = async (category) => {
 };
 export const getShowSingle = async (type,id) => {
   const url = SINGLE_BASE_URL;
-
+  
   try {
-    const response = await axios.get(url +type+ id, REQ_HEADER);
-       console.log(url +type+ id)
+    const response = await axios.get(url +type+`/`+ id, REQ_HEADER);
+       console.log("fetch URL",url +type+`/`+ id)
     //    console.log(response.data.results);
-    //    console.log("response.data.results",response.data.results);
-    return response.data.results;
+       console.log("response.data.results",response.data);
+    return response.data;
+
   } catch (error) {
     throw error;
   }

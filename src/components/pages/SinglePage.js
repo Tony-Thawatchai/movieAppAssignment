@@ -7,40 +7,65 @@ import { getShowSingle } from "../../services/MovieAPI";
 const SinglePage = ({ navigation, id, title, movies, route }) => {
   console.log("single ", route.params);
   const [paramId, setParamId] = useState(route.params.id);
-  const [paramMediaType, setParamMediaType] = useState(route.params.media_type);
-  const [movie, setMovie] = useState();
-
+  const [paramMediaType, setParamMediaType] = useState(route.params.typeOf == 'movies' ? 'movie' : 'tv');
+ 
   // useEffect(() => {
-  //   const fetchMovie = async () => {
-  //     console.log("paramId", paramId);
-  //     console.log("paramMediaType", paramMediaType);
-  //     const results = await getShowSingle(paramMediaType,paramId);
-  //     setMovie(results);
-  //     console.log("movie", movie);  
-  //   };
-  //   fetchMovie();
-    
-  // }, []);
+  //   setParamMediaType(route.params.typeOf == 'movies' ? 'movie' : 'tv');
 
-  console.log("paramMediaType", paramMediaType);
+  // },[])
+ 
+  // if (route.params.typeOf == " tvShows"){
+  //   setParamMediaType("tv");
+
+  // }
+  // if(route.params.typeOf == "movies"){
+  //   setParamMediaType("movie");
+  // }
+
+  
+  
+  const [movie, setMovie] = useState([]);
+
+  useEffect(() => {
+    const fetchMovie = async () => {
+      console.log("paramId", paramId);
+      console.log("paramMediaType", paramMediaType);
+      const results = await getShowSingle(paramMediaType,paramId);
+      setMovie(results);
+      
+    };
+    fetchMovie();
+    
+  }, []);
+  console.log("movie", movie);  
+  // console.log("paramMediaType", paramMediaType);
 
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.wrap}>
         <Text h1 style={styles.h1}>
-          {route.params.title}
+          {movie.title}
+          {/* {route.params.title} */}
         </Text>
         <Image
           style={styles.image}
           source={{
-            uri: `https://image.tmdb.org/t/p/w500${route.params.poster_path}`,
+            uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            // uri: `https://image.tmdb.org/t/p/w500${route.params.poster_path}`,
           }}
         ></Image>
         <View style={styles.textWrap}>
-          <Text style={styles.paragraph}>{route.params.overview}</Text>
+          <Text style={styles.paragraph}>
+            {movie.overview}
+            {/* {route.params.overview} */}
+            </Text>
           <Text style={styles.meta}>
-            Popularity: {route.params.popularity} | Release Date :
-            {route.params.release_date || route.params.first_air_date}
+            Popularity: 
+            {movie.popularity} 
+            {/* {route.params.popularity}  */}
+            | Release Date :
+            {movie.release_date || movie.first_air_date}
+            {/* {route.params.release_date || route.params.first_air_date} */}
           </Text>
         </View>
       </View>

@@ -65,7 +65,8 @@ const ListCard = ({ data, navigation, type }) => {
                   item.overview,
                   item.poster_path,
                   item.release_date || item.first_air_date,
-                  item.popularity
+                  item.popularity,
+                  typeOf
                 )
               }
             ></Button>
