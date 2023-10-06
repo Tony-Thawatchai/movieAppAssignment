@@ -1,10 +1,26 @@
 import { ScrollView, Image, View, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../layout/Header";
 import { Text } from "@rneui/themed";
+import { getShowSingle } from "../../services/MovieAPI";
 
 const SinglePage = ({ navigation, id, title, movies, route }) => {
   console.log("single ", route.params);
+  const [paramId, setParamId] = useState(route.params.id);
+  const [paramMediaType, setParamMediaType] = useState(route.params.media_type);
+  const [movie, setMovie] = useState();
+
+  useEffect(() => {
+    const fetchMovie = async () => {
+      console.log("paramId", paramId);
+      console.log("paramMediaType", paramMediaType);
+      const results = await getShowSingle(paramMediaType,paramId);
+      setMovie(results);
+      console.log("movie", movie);  
+    };
+    fetchMovie();
+    
+  }, []);
 
   return (
     <ScrollView style={styles.scrollView}>

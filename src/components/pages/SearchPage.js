@@ -18,43 +18,87 @@ import {
   SelectItem,
 } from "@gluestack-ui/themed";
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import ListCard from "../cards/ListCard";
 import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 // import { Input } from '@rneui/themed'
 import { Input, InputField, InputIcon } from "@gluestack-ui/themed";
 import { Button } from "@rneui/themed";
-// import { SearchIcon } from "@gluestack/ui-lucide-icons"
-const SearchPage = () => {
+import { useState } from "react";
+import { getSearch } from "../../services/MovieAPI";
+
+const SearchPage = ({navigation}) => {
+  const [search, setSearch] = useState("");
+  const [searchType, setSearchType] = useState("multi");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isInvalid, setIsInvalid] = useState(false);
+  const handleSearch = async () => {
+    setIsLoading(true);
+    setIsError(false);
+    setIsInvalid(false);
+    if (search === "") {
+      setIsInvalid(true);
+      setIsLoading(false);
+      return;
+    }
+    const fetchMovies = async () => {
+      console.log(searchType, search);
+      const results = await getSearch(searchType, search);
+      if (results.Error) {
+        setIsError(true);
+        setErrorMessage(results.Error);
+        setIsLoading(false);
+      }
+      setSearchResults(results);
+      setIsLoading(false);
+    };
+    fetchMovies();
+
+    console.log("searchResults", searchResults);
+  };
+
   return (
     <View style={styles.container}>
       <FormControl
         style={styles.formControl}
-        isDisabled={false}
-        isInvalid={false}
-        isReadOnly={false}
-        isRequired={false}
+        isInvalid={isInvalid}
+        isRequired={true}
       >
         <FormControlLabel>
           <FormControlLabelText>
-            Search Movie/TV Show Name*
+            Search Movie/TV Show Name
           </FormControlLabelText>
         </FormControlLabel>
         <Input style={styles.input} size="md">
           <FontAwesome5 name="search" style={styles.icon} />
           <InputField
             type="text"
+            value={search}
             defaultValue=""
             placeholder="i.e. James Bonds, CSI"
+            onChangeText={(e) => setSearch(e)}
           />
         </Input>
         <FormControlLabel>
           <FormControlLabelText style={styles.FormControlLabelText}>
-            Choose Search Type*
+            Choose Search Type
           </FormControlLabelText>
         </FormControlLabel>
-        <View style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
           <View style={styles.btnWrap}>
-            <Select>
+            <Select
+              selectedValue={searchType} // Bind the select value to the 'searchType' state
+              onValueChange={(itemValue) => setSearchType(itemValue)} // Update 'searchType' state when the select changes
+            >
               <SelectTrigger variant="outline" size="md">
                 <SelectInput placeholder="Select option" />
                 <SelectIcon mr="$3">
@@ -67,18 +111,14 @@ const SearchPage = () => {
                   <SelectDragIndicatorWrapper>
                     <SelectDragIndicator />
                   </SelectDragIndicatorWrapper>
-                  <SelectItem label="UX Research" value="ux" />
-                  <SelectItem label="Web Development" value="web" />
+                  <SelectItem label="tv" value="tv" />
+                  <SelectItem label="movie" value="movie" />
                   <SelectItem
-                    label="Cross Platform Development Process"
-                    value="Cross Platform Development Process"
+                    label="multi"
+                    value="multi"
+                    defaultSelected={true}
+                    selectedValue={true}
                   />
-                  <SelectItem
-                    label="UI Designing"
-                    value="ui"
-                    isDisabled={true}
-                  />
-                  <SelectItem label="Backend Development" value="backend" />
                 </SelectContent>
               </SelectPortal>
             </Select>
@@ -88,12 +128,24 @@ const SearchPage = () => {
               </FormControlHelperText>
             </FormControlHelper>
           </View>
-          <Button style={{ 
-            
-            // width: "40%"
-             }}>
-              <FontAwesome5 name="search" style={[styles.icon, ]} />
-              Search</Button>
+          <Button
+            color="#52B3D0"
+            buttonStyle={{
+              display: "flex",
+              gap: 10,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 5,
+            }}
+            onPress={() => handleSearch()}
+          >
+            <FontAwesome5
+              name="search"
+              style={[styles.icon, styles.iconWhite]}
+            />
+            Search
+          </Button>
         </View>
         <FormControlError>
           <FormControlErrorText>
@@ -101,6 +153,19 @@ const SearchPage = () => {
           </FormControlErrorText>
         </FormControlError>
       </FormControl>
+    <View style={{flex: 1, width: "100%"}}>
+    {isLoading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <View>
+          {isError ? (
+            <Text>{errorMessage}</Text>
+          ) : (
+            <ListCard data={searchResults}  navigation={navigation} />
+          )}
+        </View>
+      )}
+    </View>
     </View>
   );
 };
@@ -139,5 +204,9 @@ const styles = StyleSheet.create({
   icon: {
     color: "hsl(0,0%,70%)",
     fontSize: 20,
+  },
+  iconWhite: {
+    color: "hsl(0,0%,100%)",
+    fontSize: 16,
   },
 });

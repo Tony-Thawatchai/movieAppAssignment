@@ -14,21 +14,24 @@ const ListCard = ({ data, navigation, type }) => {
     overview,
     poster_path,
     release_date,
+    media_type,
     popularity
   ) => {
     navigation.navigate("Single Movie", {
       title,
       id,
+      media_type,
       overview,
       poster_path,
       release_date,
       popularity,
     });
   };
-  // console.log("data", data);
+  console.log("data", data);
   return (
     <FlatList
       data={movies}
+      
       renderItem={({ item }) => (
         <View style={styles.wrap}>
           <Image
@@ -51,8 +54,10 @@ const ListCard = ({ data, navigation, type }) => {
                 borderRadius: 8,
               }}
               onPress={() =>
+                
                 handleToSinglePage(
                   item.id,
+                  // item.media_type,
                   item.title || item.name,
                   item.overview,
                   item.poster_path,
