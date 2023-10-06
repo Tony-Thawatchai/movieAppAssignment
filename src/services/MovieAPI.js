@@ -25,7 +25,7 @@ export const getTVShow = async (category) => {
 
   try {
     const response = await axios.get(url + category, REQ_HEADER);
-    //    console.log(url + category, REQ_HEADER)
+       console.log(url + category, REQ_HEADER)
     //    console.log(response.data.results);
     //    console.log("response.data.results",response.data.results);
     return response.data.results;

@@ -45,7 +45,7 @@ const ListCard = ({ data, navigation, type }) => {
               {typeOf === "movies" ? item.title : item.name}
             </Text>
             <Text style={styles.text}>Popularity: {item.popularity}</Text>
-            <Text style={styles.text}>Release Date: {item.release_date}</Text>
+            <Text style={styles.text}>Release Date: { typeOf == "movies" ? item.release_date : item.first_air_date}</Text>
             <Button
               title="More Details"
               color="#52B3D0"

@@ -10,17 +10,17 @@ const SinglePage = ({ navigation, id, title, movies, route }) => {
   const [paramMediaType, setParamMediaType] = useState(route.params.media_type);
   const [movie, setMovie] = useState();
 
-  useEffect(() => {
-    const fetchMovie = async () => {
-      console.log("paramId", paramId);
-      console.log("paramMediaType", paramMediaType);
-      const results = await getShowSingle(paramMediaType,paramId);
-      setMovie(results);
-      console.log("movie", movie);  
-    };
-    fetchMovie();
+  // useEffect(() => {
+  //   const fetchMovie = async () => {
+  //     console.log("paramId", paramId);
+  //     console.log("paramMediaType", paramMediaType);
+  //     const results = await getShowSingle(paramMediaType,paramId);
+  //     setMovie(results);
+  //     console.log("movie", movie);  
+  //   };
+  //   fetchMovie();
     
-  }, []);
+  // }, []);
 
   return (
     <ScrollView style={styles.scrollView}>
