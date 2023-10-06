@@ -27,7 +27,7 @@ const ListCard = ({ data, navigation, type }) => {
       popularity,
     });
   };
-  console.log("data", data);
+  // console.log("data", data);
   return (
     <FlatList
       data={movies}

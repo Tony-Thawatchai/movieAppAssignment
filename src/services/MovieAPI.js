@@ -38,7 +38,7 @@ export const getShowSingle = async (type,id) => {
 
   try {
     const response = await axios.get(url +type+ id, REQ_HEADER);
-    //    console.log(url + category, REQ_HEADER)
+       console.log(url +type+ id)
     //    console.log(response.data.results);
     //    console.log("response.data.results",response.data.results);
     return response.data.results;
