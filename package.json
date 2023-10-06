@@ -9,10 +9,25 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "@gluestack-style/react": "^0.2.51",
+    "@gluestack-ui/themed": "^0.1.56",
+    "@gluestack/ui-lucide-icons": "^0.0.1",
+    "@react-navigation/native": "^6.1.8",
+    "@react-navigation/stack": "^6.3.18",
+    "@rneui/base": "^4.0.0-rc.7",
+    "@rneui/themed": "^4.0.0-rc.8",
+    "axios": "^1.5.1",
     "expo": "~49.0.13",
     "expo-status-bar": "~1.6.0",
+    "install": "^0.13.0",
+    "npm": "^10.2.0",
+    "qs": "^6.11.2",
     "react": "18.2.0",
-    "react-native": "0.72.5"
+    "react-native": "0.72.5",
+    "react-native-safe-area-context": "^4.7.2",
+    "react-native-svg": "^13.4.0",
+    "react-native-vector-icons": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
